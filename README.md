@@ -19,9 +19,15 @@ Rancher UI driver for the OCP GraphQL node driver.
 
 ## Release (component.js)
 
-- Build: `npm run build`
+- Build locally: `npm run build`
 - Publish `dist/component.js` and `dist/component.css` to GitHub Releases or the `gh-pages` branch.
 - Use the published `component.js` URL as the Custom UI URL in Rancher.
+
+## CI/CD (GitHub Actions)
+
+- `build.yml` publishes `dist/` to `gh-pages/master` on pushes to `master` or `main`.
+- `build-dev.yml` publishes `dist/` to `gh-pages/dev` on non-main branches.
+- `build-rel.yml` publishes `dist/` to `gh-pages/<tag>` for version tags like `v0.1.0`.
 
 ## Rancher usage
 

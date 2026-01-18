@@ -40,6 +40,11 @@ No formatter is configured. Keep formatting consistent with existing files.
 
 No test commands are available yet.
 
+### Release (gh-pages)
+
+- `npm run build`
+- Publish `dist/` to `gh-pages` (GitHub Actions handles this in `.github/workflows/*.yml`).
+
 ### Test (single)
 
 No test commands are available yet.
