@@ -1,0 +1,144 @@
+<section class="horizontal-form">
+  <div class="container-fluid">
+    {{!-- This line shows the driver title which you don't have to change it --}}
+    <div class="over-hr"><span>{{driverOptionsTitle}}</span></div>
+
+    {{#accordion-list showExpandAll=false as | al expandFn | }}
+      {{#accordion-list-item
+        title="1. API Access"
+        detail="Configure OCP GraphQL endpoint and token"
+        expandOnInit=true
+        expand=(action expandFn)
+      }}
+        <div class="row">
+          <div class="col span-12">
+            <label class="acc-label">OCP GraphQL Endpoint
+              <span class="field-required ember-view">*</span>
+            </label>
+            {{input type="text"
+              class="form-control"
+              value=config.ocpEndpoint
+            }}
+            <p class="help-block">Example: https://ocp.example.com/v2/graphql</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col span-12">
+            <label class="acc-label">OCP Auth Token
+              <span class="field-required ember-view">*</span>
+            </label>
+            {{input type="password"
+              class="form-control"
+              value=config.ocpAuthToken
+            }}
+            <p class="help-block">Provide the token used by the node driver</p>
+          </div>
+        </div>
+      {{/accordion-list-item}}
+
+      {{#accordion-list-item
+        title="2. Instance Settings"
+        detail="Define project, image, flavor, and network IDs"
+        expandOnInit=true
+        expand=(action expandFn)
+      }}
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">Project ID
+              <span class="field-required ember-view">*</span>
+            </label>
+            {{input type="text"
+              class="form-control"
+              value=config.ocpProjectId
+            }}
+          </div>
+          <div class="col span-6">
+            <label class="acc-label">Flavor ID
+              <span class="field-required ember-view">*</span>
+            </label>
+            {{input type="text"
+              class="form-control"
+              value=config.ocpFlavorId
+            }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">Image ID
+              <span class="field-required ember-view">*</span>
+            </label>
+            {{input type="text"
+              class="form-control"
+              value=config.ocpImageId
+            }}
+          </div>
+          <div class="col span-6">
+            <label class="acc-label">Network ID
+              <span class="field-required ember-view">*</span>
+            </label>
+            {{input type="text"
+              class="form-control"
+              value=config.ocpNetworkId
+            }}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col span-12">
+            <label class="acc-label">Allocate Public IP</label>
+            <div class="checkbox">
+              <label>{{input type="checkbox" checked=config.ocpPublicIp}} Allocate public IP</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col span-12">
+            <label class="acc-label">Cloud-Init User Data (raw or base64)</label>
+            {{input-textarea
+              class="form-control"
+              rows=6
+              value=config.ocpUserData
+            }}
+            <p class="help-block">Provide cloud-init text or base64 value</p>
+          </div>
+        </div>
+      {{/accordion-list-item}}
+    {{/accordion-list}}
+
+    {{!-- This following contains the Name, Labels and Engine Options fields --}}
+    <div class="over-hr">
+      <span>{{templateOptionsTitle}}</span>
+    </div>
+
+    {{form-name-description
+      model=model
+      nameRequired=true
+      rowClass="row mb-10"
+    }}
+
+    {{form-user-labels
+      initialLabels=labelResource.labels
+      setLabels=(action 'setLabels')
+      expand=(action expandFn)
+    }}
+
+    {{form-node-taints
+      model=model
+      expand=(action expandFn)
+    }}
+
+    {{form-engine-opts
+      machine=model
+      showEngineUrl=showEngineUrl
+    }}
+
+    {{!-- This component shows errors produced by validate() in the component --}}
+    {{top-errors errors=errors}}
+
+    {{!-- This component shows the Create and Cancel buttons --}}
+    {{save-cancel save="save" cancel=(action "cancel")}}
+  </div>
+</section>
